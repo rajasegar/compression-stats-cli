@@ -38,7 +38,6 @@ module.exports = class CompressionStats {
   }
 
   printJSON() {
-    let ui = this.ui;
     return this.makeFileSizesObject().then((files) => {
       if (files.length !== 0) {
         let entries = files.map((file) => ({

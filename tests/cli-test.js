@@ -4,13 +4,12 @@ const QUnit = require("qunit");
 
 const PROJECT_ROOT = path.join(__dirname, "..");
 const EXECUTABLE_PATH = path.join(PROJECT_ROOT, "bin", "cli.js");
-const FIXTURE_PATH = path.join(__dirname, "fixtures/input");
 
 // resolved from the root of the project
 const inputDir = path.resolve("./tests/fixtures");
 const execOpts = { cwd: inputDir, stderr: "inherit" };
 
-QUnit.module("cli", function (hooks) {
+QUnit.module("cli", function () {
   QUnit.test("should print file statistics", async function (assert) {
     const result = await execa(EXECUTABLE_PATH, [], execOpts);
     const output = `Compression statistics:
