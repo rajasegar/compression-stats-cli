@@ -1,0 +1,25 @@
+{
+  "name": "compression-stats-cli",
+  "version": "1.0.0",
+  "description": "A CLI tool to print gzip and brotli compression statistics for your files.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajasegar/compression-stats-cli.git"
+  },
+  "keywords": [
+    "compression",
+    "gzip",
+    "brotli",
+    "cli"
+  ],
+  "author": "Rajasegar Chandran <rajasegar.c@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rajasegar/compression-stats-cli/issues"
+  },
+  "homepage": "https://github.com/rajasegar/compression-stats-cli#readme"
+}
