@@ -1,9 +1,12 @@
 "use strict";
 
 const chalk = require("chalk");
+const filesize = require("filesize");
+const fs = require("fs");
 const path = require("path");
 const util = require("util");
 const walkSync = require("walk-sync");
+const zlib = require("zlib");
 
 module.exports = class CompressionStats {
   constructor(options) {
@@ -11,12 +14,9 @@ module.exports = class CompressionStats {
   }
 
   print() {
-    const filesize = require("filesize");
-    let ui = this.ui;
-
-    return this.makeAssetSizesObject().then((files) => {
+    return this.makeFileSizesObject().then((files) => {
       if (files.length !== 0) {
-        console.log(chalk.green("File sizes:"));
+        console.log(chalk.green("Compression statistics:"));
         return files.forEach((file) => {
           let sizeOutput = filesize(file.size);
           if (file.showGzipped) {
@@ -31,9 +31,7 @@ module.exports = class CompressionStats {
         });
       } else {
         console.log(
-          chalk.red(
-            `No asset files found in the path provided: ${this.outputPath}`
-          )
+          chalk.red(`No files found in the path provided: ${this.inputPath}`)
         );
       }
     });
@@ -41,7 +39,7 @@ module.exports = class CompressionStats {
 
   printJSON() {
     let ui = this.ui;
-    return this.makeAssetSizesObject().then((files) => {
+    return this.makeFileSizesObject().then((files) => {
       if (files.length !== 0) {
         let entries = files.map((file) => ({
           name: file.name,
@@ -52,29 +50,19 @@ module.exports = class CompressionStats {
         console.log(JSON.stringify({ files: entries }));
       } else {
         console.log(
-          chalk.red(
-            `No asset files found in the path provided: ${this.outputPath}`
-          )
+          chalk.red(`No files found in the path provided: ${this.inputPath}`)
         );
       }
     });
   }
 
-  makeAssetSizesObject() {
+  makeFileSizesObject() {
     return new Promise((resolve) => {
-      const fs = require("fs");
-      const zlib = require("zlib");
       let brotli = util.promisify(zlib.brotliCompress);
       let files = this.findFiles();
-      let testFileRegex = /(test-(loader|support))|(testem)/i;
 
       let assets = files
-        // Skip test files
-        .filter((file) => {
-          let filename = path.basename(file);
-          return !testFileRegex.test(filename);
-        })
-        // Print human-readable file sizes (including gzipped)
+        // Print human-readable file sizes (including gzipped and brotli)
         .map((file) => {
           let contentsBuffer = fs.readFileSync(file);
           let gzipSize = zlib.gzipSync(contentsBuffer).length;
@@ -92,19 +80,15 @@ module.exports = class CompressionStats {
   }
 
   findFiles() {
-    let outputPath = this.outputPath;
+    let inputPath = this.inputPath;
 
     try {
-      return walkSync(outputPath, {
+      return walkSync(inputPath, {
         directories: false,
-      })
-        .filter((x) => x.endsWith(".css") || x.endsWith(".js"))
-        .map((x) => path.join(outputPath, x));
+      }).map((x) => path.join(inputPath, x));
     } catch (e) {
       if (e !== null && typeof e === "object" && e.code === "ENOENT") {
-        throw new Error(
-          `No asset files found in the path provided: ${outputPath}`
-        );
+        throw new Error(`No files found in the path provided: ${inputPath}`);
       } else {
         throw e;
       }
