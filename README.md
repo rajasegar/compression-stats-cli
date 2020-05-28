@@ -28,3 +28,29 @@ Compression statistics:
 
 If you omit the second argument (file/folder path), it will try to collect
 the statistics info from the current directory.
+
+## Options
+
+### include
+
+```
+csc . --include js
+
+Compression statistics:
+ - prism.js: 31.28 KB (9.83 KB gzipped) (8.66 KB brotli)
+```
+
+
+## Help
+
+```
+Usage: csc [folder-path]
+
+Options:
+  --help               Show help                                       [boolean]
+  --version            Show version number                             [boolean]
+  --skip-brotli, --sb  Skip Brotli compression stats  [boolean] [default: false]
+  --skip-gzip, --sg    Skip Gzip compression stats    [boolean] [default: false]
+  --include, -i        Include these file extensions only                [array]
+  --exclude, -x        Exclude these file extensions                     [array]
+``````
