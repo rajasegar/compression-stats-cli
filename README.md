@@ -12,6 +12,11 @@ A CLI tool to print gzip and brotli compression statistics for your files.
 npm i -g compression-stats-cli
 ```
 
+```
+npx compression-stats-cli 
+```
+
+
 ## Usage 
 
 ```
@@ -32,12 +37,48 @@ the statistics info from the current directory.
 ## Options
 
 ### include
+Include only the files with extensions specified. Just give the extensions 
+separated by space without "."
 
 ```
-csc . --include js
+csc . --include js css
 
 Compression statistics:
+ - prism.css: 4.16 KB (1.52 KB gzipped) (1.25 KB brotli)
  - prism.js: 31.28 KB (9.83 KB gzipped) (8.66 KB brotli)
+```
+
+### exclude
+Exclude the files with extensions specified. Just give the extensions 
+separated by space without "."
+
+```
+csc . --exclude js txt
+
+Compression statistics:
+ - prism.css: 4.16 KB (1.52 KB gzipped) (1.25 KB brotli)
+```
+
+### skip-brotli
+Skip the Brotli stats information in the output
+
+```
+csc . --skip-brotli
+
+Compression statistics:
+ - prism.css: 4.16 KB (1.52 KB gzipped)
+ - prism.js: 31.28 KB (9.83 KB gzipped)
+```
+
+### skip-gzip
+Skip the Gzip stats information in the output
+
+```
+csc . --skip-gzip
+
+Compression statistics:
+ - prism.css: 4.16 KB (1.25 KB brotli)
+ - prism.js: 31.28 KB (8.66 KB brotli)
 ```
 
 
