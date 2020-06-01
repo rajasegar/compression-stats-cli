@@ -29,9 +29,11 @@
   },
   "homepage": "https://github.com/rajasegar/compression-stats-cli#readme",
   "dependencies": {
+    "async-promise-queue": "^1.0.5",
     "chalk": "^4.0.0",
     "filesize": "^6.1.0",
     "walk-sync": "^2.1.0",
+    "workerpool": "^6.0.0",
     "yargs": "^15.3.1"
   },
   "devDependencies": {

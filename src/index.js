@@ -1,28 +1,27 @@
-"use strict";
+'use strict';
 
-const chalk = require("chalk");
-const filesize = require("filesize");
-const fs = require("fs");
-const path = require("path");
-const walkSync = require("walk-sync");
-const zlib = require("zlib");
+const chalk = require('chalk');
+const filesize = require('filesize');
+const path = require('path');
+const walkSync = require('walk-sync');
+const workerpool = require('workerpool');
 
 module.exports = class CompressionStats {
   constructor(options) {
-    Object.assign(this, options);
+    this.options = options;
   }
 
   print() {
-    return this.makeFileSizesObject().then((files) => {
+    return this.getFileSizesObject().then((files) => {
       if (files.length !== 0) {
-        console.log(chalk.green("Compression statistics:"));
+        console.log(chalk.green('Compression statistics:'));
         return files.forEach((file) => {
           let sizeOutput = filesize(file.size);
-          if (file.showGzipped && !this.skipGzip) {
+          if (file.showGzipped && !this.options.skipGzip) {
             sizeOutput += ` (${filesize(file.gzipSize)} gzipped)`;
           }
 
-          if (!this.skipBrotli) {
+          if (!this.options.skipBrotli) {
             sizeOutput += ` (${filesize(file.brotliSize)} brotli)`;
           }
 
@@ -38,71 +37,56 @@ module.exports = class CompressionStats {
     });
   }
 
-  printJSON() {
-    return this.makeFileSizesObject().then((files) => {
-      if (files.length !== 0) {
-        let entries = files.map((file) => ({
-          name: file.name,
-          size: file.size,
-          gzipSize: file.gzipSize,
-          brotliSize: file.brotliSize,
-        }));
-        console.log(JSON.stringify({ files: entries }));
-      } else {
-        console.log(
-          chalk.red(`No files found in the path provided: ${this.inputPath}`)
-        );
-      }
-    });
-  }
-
-  makeFileSizesObject() {
+  getFileSizesObject() {
+    const { options } = this;
     return new Promise((resolve) => {
       let files = this.findFiles();
+
+      // create a dedicated worker
+      const pool = workerpool.pool(__dirname + '/worker.js');
 
       let assets = files
         // Print human-readable file sizes (including gzip and brotli)
         .map((file) => {
-          let contentsBuffer = fs.readFileSync(file);
-          let output = {
-            name: file,
-            size: contentsBuffer.length,
-            showGzipped: contentsBuffer.length > 0,
-          };
-
-          if (!this.skipBrotli) {
-            output.brotliSize = zlib.brotliCompressSync(contentsBuffer).length;
-          }
-
-          if (!this.skipGzip) {
-            output.gzipSize = zlib.gzipSync(contentsBuffer).length;
-          }
-
-          return output;
+          return pool
+            .exec('compressFile', [file, options])
+            .then(function (result) {
+              //console.log(result);
+              return result;
+            })
+            .catch(function (err) {
+              console.error(err);
+            });
         });
 
-      return resolve(assets);
+      return Promise.all(assets).then((data) => {
+        pool.terminate(); // terminate all workers when done
+        resolve(data);
+      });
     });
   }
 
   findFiles() {
-    let inputPath = this.inputPath || ".";
+    const { inputPath, include, exclude } = this.options;
+    let _inputPath = inputPath || '.';
     let _options = { directories: false };
 
     // include filter
-    if (this.include && this.include.length > 0) {
-      _options.globs = this.include.map((i) => `*.${i}`);
+    if (include && include.length > 0) {
+      _options.globs = include.map((i) => `*.${i}`);
     }
 
     // exclude filter
-    if (this.exclude && this.exclude.length > 0) {
-      _options.ignore = this.exclude.map((i) => `*.${i}`);
+    if (exclude && exclude.length > 0) {
+      _options.ignore = exclude.map((i) => `*.${i}`);
     }
 
     try {
-      return walkSync(inputPath, _options).map((x) => path.join(inputPath, x));
+      return walkSync(_inputPath, _options).map((x) =>
+        path.join(_inputPath, x)
+      );
     } catch (e) {
-      if (e !== null && typeof e === "object" && e.code === "ENOENT") {
+      if (e !== null && typeof e === 'object' && e.code === 'ENOENT') {
         throw new Error(`No files found in the path provided: ${inputPath}`);
       } else {
         throw e;

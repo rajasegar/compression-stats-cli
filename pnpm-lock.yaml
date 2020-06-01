@@ -1,7 +1,9 @@
 dependencies:
+  async-promise-queue: 1.0.5
   chalk: 4.0.0
   filesize: 6.1.0
   walk-sync: 2.1.0
+  workerpool: 6.0.0
   yargs: 15.3.1
 devDependencies:
   '@semantic-release/changelog': 5.0.1_semantic-release@17.0.8
@@ -612,6 +614,19 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-+Ryf6g3BKoRc7jfp7ad8tM4TtMiaWvbF/1/sQcZPkkS7ag3D5nMBCe2UfOTONtAkaG0tO0ij3C5Lwmf1EiyjHg==
+  /async-promise-queue/1.0.5:
+    dependencies:
+      async: 2.6.3
+      debug: 2.6.9
+    dev: false
+    resolution:
+      integrity: sha512-xi0aQ1rrjPWYmqbwr18rrSKbSaXIeIwSd1J4KAgVfkq8utNbdZoht7GfvfY6swFUAMJ9obkc4WPJmtGwl+B8dw==
+  /async/2.6.3:
+    dependencies:
+      lodash: 4.17.15
+    dev: false
+    resolution:
+      integrity: sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
   /asynckit/0.4.0:
     dev: true
     resolution:
@@ -958,6 +973,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
+  /debug/2.6.9:
+    dependencies:
+      ms: 2.0.0
+    dev: false
+    resolution:
+      integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==
   /debug/4.1.1:
     dependencies:
       ms: 2.1.2
@@ -2142,7 +2163,6 @@ packages:
     resolution:
       integrity: sha1-2ZwHpmnp5tJOE2Lf4mbGdhavEwI=
   /lodash/4.17.15:
-    dev: true
     resolution:
       integrity: sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
   /log-driver/1.2.7:
@@ -2317,6 +2337,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==
+  /ms/2.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=
   /ms/2.1.2:
     dev: true
     resolution:
@@ -3748,6 +3772,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-J1hIEIkUVqQXHI0CJkQa3pDLyus=
+  /workerpool/6.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-fU2OcNA/GVAJLLyKUoHkAgIhKb0JoCpSjLC/G2vYKxUjVmQwGbRVeoPJ1a8U4pnVofz4AQV5Y/NEw8oKqxEBtA==
   /wrap-ansi/6.2.0:
     dependencies:
       ansi-styles: 4.2.1
@@ -3825,6 +3853,7 @@ packages:
 specifiers:
   '@semantic-release/changelog': ^5.0.1
   '@semantic-release/git': ^9.0.0
+  async-promise-queue: ^1.0.5
   chalk: ^4.0.0
   coveralls: ^3.1.0
   eslint: ^7.1.0
@@ -3838,4 +3867,5 @@ specifiers:
   qunit: ^2.10.0
   semantic-release: ^17.0.8
   walk-sync: ^2.1.0
+  workerpool: ^6.0.0
   yargs: ^15.3.1
