@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/rajasegar/compression-stats-cli/compare/v1.2.1...v1.2.2) (2020-06-01)
+
+
+### Bug Fixes
+
+* add node engine requirement > 10.16.0 ([378ad60](https://github.com/rajasegar/compression-stats-cli/commit/378ad60b77e4db179e6be2040b33fe97e193cb0c))
+
 ## [1.2.1](https://github.com/rajasegar/compression-stats-cli/compare/v1.2.0...v1.2.1) (2020-06-01)
 
 
