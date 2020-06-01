@@ -2,6 +2,7 @@ dependencies:
   chalk: 4.0.0
   filesize: 6.1.0
   walk-sync: 2.1.0
+  workerpool: 6.0.0
   yargs: 15.3.1
 devDependencies:
   '@semantic-release/changelog': 5.0.1_semantic-release@17.0.8
@@ -3748,6 +3749,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-J1hIEIkUVqQXHI0CJkQa3pDLyus=
+  /workerpool/6.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-fU2OcNA/GVAJLLyKUoHkAgIhKb0JoCpSjLC/G2vYKxUjVmQwGbRVeoPJ1a8U4pnVofz4AQV5Y/NEw8oKqxEBtA==
   /wrap-ansi/6.2.0:
     dependencies:
       ansi-styles: 4.2.1
@@ -3838,4 +3843,5 @@ specifiers:
   qunit: ^2.10.0
   semantic-release: ^17.0.8
   walk-sync: ^2.1.0
+  workerpool: ^6.0.0
   yargs: ^15.3.1
