@@ -87,7 +87,9 @@ module.exports = class CompressionStats {
       );
     } catch (e) {
       if (e !== null && typeof e === 'object' && e.code === 'ENOENT') {
-        throw new Error(`No files found in the path provided: ${inputPath}`);
+        //throw new Error(`No files found in the path provided: ${inputPath}`);
+        console.log(`No files found in the path provided: ${inputPath}`);
+        return [];
       } else {
         throw e;
       }

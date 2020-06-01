@@ -63,4 +63,14 @@ QUnit.module('cli', function () {
     assert.equal(result.exitCode, 0, 'exited with zero');
     assert.equal(result.stdout, output);
   });
+
+  QUnit.test('should error for invalid path', async function (assert) {
+    const result = await execa(EXECUTABLE_PATH, ['/abc/xyz'], execOpts);
+    const output = `No files found in the path provided: /abc/xyz
+No files found in the path provided: undefined`;
+
+    console.log(result);
+    assert.equal(result.exitCode, 0, 'exited with zero');
+    assert.equal(result.stdout, output);
+  });
 });
