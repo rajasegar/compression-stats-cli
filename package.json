@@ -1,6 +1,6 @@
 {
   "name": "compression-stats-cli",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A CLI tool to print gzip and brotli compression statistics for your files.",
   "main": "src/index.js",
   "bin": {
