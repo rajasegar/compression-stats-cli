@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/rajasegar/compression-stats-cli/compare/v1.2.0...v1.2.1) (2020-06-01)
+
+
+### Bug Fixes
+
+* lint errors with prettier fixed ([05bc373](https://github.com/rajasegar/compression-stats-cli/commit/05bc3730d810ecc631b0f616605c0fbee536efb8))
+
 # [1.2.0](https://github.com/rajasegar/compression-stats-cli/compare/v1.1.0...v1.2.0) (2020-06-01)
 
 
