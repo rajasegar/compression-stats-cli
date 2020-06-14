@@ -34,6 +34,12 @@ Compression statistics:
 If you omit the second argument (file/folder path), it will try to collect
 the statistics info from the current directory.
 
+## Info
+This program uses the [Zlib](https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_zlib) library that comes with Node.js, hence only
+`gzip` and `brotli` compressions are supported.
+
+This requires Node.js >= `10.16.0`
+
 ## Options
 
 ### include
